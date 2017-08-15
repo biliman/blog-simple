@@ -7,7 +7,7 @@ const saltRounds = 7;
 methods.signUp = (req, res) => {
   let newUser = new User ({
     username: req.body.username,
-    password = bCrypt.hashSync(req.body.password, saltRounds)
+    password: bCrypt.hashSync(req.body.password, saltRounds)
   })
 
   newUser.save((err, response) => {
@@ -22,7 +22,7 @@ methods.signUp = (req, res) => {
 
 methods.signIn = (req, res) => {
   User.findOne({ username: req.body.username}, (err, response) => {
-    if (err) res.json({ message: `Error on SignIn: ${err}`m success: false })
+    if (err) res.json({ message: `Error on SignIn: ${err}`, success: false })
     else {
       if (bCrypt.compareSync(req.body.password, response.password)) {
         let token = jwt.sign({
