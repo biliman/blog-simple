@@ -11,7 +11,7 @@ methods.signUp = (req, res) => {
   })
 
   newUser.save((err, response) => {
-    if (err) res.json({ message: `Error on SignUp: ${err}`, success: false })
+    if (err) res.json({ msg: `Error on SignUp: ${err}`, success: false })
     else {
       console.log(`SignUp Success`);
       console.log(response);
@@ -22,7 +22,7 @@ methods.signUp = (req, res) => {
 
 methods.signIn = (req, res) => {
   User.findOne({ username: req.body.username}, (err, response) => {
-    if (err) res.json({ message: `Error on SignIn: ${err}`, success: false })
+    if (err) res.json({ msg: `Error on SignIn: ${err}`, success: false })
     else {
       if (bCrypt.compareSync(req.body.password, response.password)) {
         let token = jwt.sign({
@@ -33,7 +33,7 @@ methods.signIn = (req, res) => {
           username: response.username,
           token })
       } else {
-        res.json({ message: `Password is wrong`})
+        res.json({ msg: `Password is wrong`})
       }
     }
   })
@@ -41,7 +41,7 @@ methods.signIn = (req, res) => {
 
 methods.getAllUser = (req, res) => {
   User.find({}, (err, response) => {
-    if (err) res.json({ message: `Error Getting User Data: ${err}`, success: false})
+    if (err) res.json({ msg: `Error Getting User Data: ${err}`, success: false})
     else {
       res.send(response)
     }
